@@ -24,13 +24,16 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         if(!(path ?? "").isEmpty) {
             self.updateFrequency = updateFrequency ?? 200
             let audioUrl = URL.init(string: path!)
+            print(path)
             if(audioUrl == nil){
+                print("URL NOT FOUND")
                 result(FlutterError(code: Constants.audioWaveforms, message: "Failed to initialise Url from provided audio file", details: "If path contains `file://` try removing it"))
                 return
             }
             do {
                 player = try AVAudioPlayer(contentsOf: audioUrl!)
             } catch {
+                print("Player Failed")
                 result(FlutterError(code: Constants.audioWaveforms, message: "Failed to prepare player", details: error.localizedDescription))
             }
             player?.enableRate = true
